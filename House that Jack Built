@@ -1,0 +1,168 @@
+//The first method is the main method, and it calls all the other function in an order to output the lyrics
+public class Jack{ 
+    public static void main(String[] args){
+        firstLine();
+        secondMalt();
+        thirdVerse();
+        nameCat();
+        fifthVerse();
+        nameCow();
+        tossedDog();
+        sixthVerse();
+    }
+    
+    public static void firstLine(){
+        System.out.println("This is the house that Jack built.");
+        System.out.println();
+    
+  
+    }
+//Despite firstVerse not being in the main method, it is called in the 2nd, and therefore 3rd verse method in order to continue the lyrics.
+    public static void firstVerse(){
+        System.out.println("That lay in the house that Jack built.");
+        System.out.println();
+ 
+    }
+    
+    public static void secondVerse(){
+        System.out.println("That ate the malt");
+        firstVerse();
+
+    }
+    
+    public static void secondMalt(){
+        System.out.println("This is the malt");
+        firstVerse();
+    }
+    
+    public static void thirdVerse(){
+        System.out.println("This is the rat,");
+        secondVerse();
+    }
+// The killed rat method is here because the first time the rat shows up, its not being killed. This is called by other methods, not the main one.
+    public static void killedRat() {
+        System.out.println("That killed the rat,");
+        secondVerse();
+        
+    }
+    
+    public static void tossedDog() {
+        System.out.println("That tossed the dog,");
+        worriedCat();
+        killedRat();
+    }
+    
+    public static void nameCow() {
+        System.out.println("This is the cow with the crumpled horn,");
+    }
+// I am calling methods called something like killedCat and not fifthVerse because the lyrics for previoulsy introduced animals changes once.
+    public static void nameCat(){
+        System.out.println("This is the cat,");
+        killedRat();
+    }
+    public static void fifthVerse(){
+        nameDog();
+        killedRat();
+    }
+    public static void nameDog(){
+        System.out.println("This is the dog,");
+        worriedCat();
+
+    }
+    public static void worriedCat(){
+        System.out.println("That worried the cat,");
+
+    }
+// The top lines are not seen anywhere else, so they can easily be put here
+    public static void sixthVerse(){
+        System.out.println("This is the maiden all forlorn");
+        System.out.println("That milked the cow with the crumpled horn,");
+        tossedDog();
+
+
+    }
+}   
+//The first method is the main method, and it calls all the other function in an order to output the lyrics
+public class Jack{ 
+    public static void main(String[] args){
+        firstLine();
+        secondMalt();
+        thirdVerse();
+        nameCat();
+        fifthVerse();
+        nameCow();
+        tossedDog();
+        sixthVerse();
+    }
+    
+    public static void firstLine(){
+        System.out.println("This is the house that Jack built.");
+        System.out.println();
+    
+  
+    }
+//Despite firstVerse not being in the main method, it is called in the 2nd, and therefore 3rd verse method in order to continue the lyrics.
+    public static void firstVerse(){
+        System.out.println("That lay in the house that Jack built.");
+        System.out.println();
+ 
+    }
+    
+    public static void secondVerse(){
+        System.out.println("That ate the malt");
+        firstVerse();
+ 
+    }
+    
+    public static void secondMalt(){
+        System.out.println("This is the malt");
+        firstVerse();
+    }
+    
+    public static void thirdVerse(){
+        System.out.println("This is the rat,");
+        secondVerse();
+    }
+// The killed rat method is here because the first time the rat shows up, its not being killed. This is called by other methods, not the main one.
+    public static void killedRat() {
+        System.out.println("That killed the rat,");
+        secondVerse();
+        
+    }
+    
+    public static void tossedDog() {
+        System.out.println("That tossed the dog,");
+        worriedCat();
+        killedRat();
+    }
+    
+    public static void nameCow() {
+        System.out.println("This is the cow with the crumpled horn,");
+    }
+// I am calling methods called something like killedCat and not fifthVerse because the lyrics for previoulsy introduced animals changes once.
+    public static void nameCat(){
+        System.out.println("This is the cat,");
+        killedRat();
+    }
+    public static void fifthVerse(){
+        nameDog();
+        killedRat();
+    }
+    public static void nameDog(){
+        System.out.println("This is the dog,");
+        worriedCat();
+ 
+    }
+    public static void worriedCat(){
+        System.out.println("That worried the cat,");
+ 
+    }
+// The top lines are not seen anywhere else, so they can easily be put here
+    public static void sixthVerse(){
+        System.out.println("This is the maiden all forlorn");
+        System.out.println("That milked the cow with the crumpled horn,");
+            tossedDog();
+ 
+ 
+    }
+}
