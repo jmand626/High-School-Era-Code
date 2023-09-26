@@ -1,0 +1,166 @@
+//Joban Mand 
+//Period 3
+//10/23/22
+//Advanced Comp Sci AssassinManager
+//AssassinManager Class
+ 
+ 
+import java.util.*;
+//We need this for List
+ 
+ 
+//This was harder than LetterInventory and MUCH harder than GuitarHero
+ 
+public class AssassinManager{
+ 
+    private AssassinNode killRing;
+    //The killring are the people still in the game
+    private AssassinNode graveyard;
+    //The graveyard are the people who are dead
+ 
+    public AssassinManager(List<String> names) throws IllegalArgumentException{
+        if(names.size() == 0) throw new IllegalArgumentException();
+        killRing = new AssassinNode(names.get(0));
+        //Intiaziling the first one as a fencepost problem
+        AssassinNode temp = killRing;
+        for(int i = 1; i < names.size(); i++){
+            temp.next = new AssassinNode(names.get(i));
+            temp = temp.next;
+        }
+        //The classic linked list transversel algorithim with a for loop in this specific case
+ 
+    }
+ 
+    public void printKillRing(){//This sounds like a cult, but it basicaly just prints out everyone who is alive
+        AssassinNode temp = killRing;
+        while(temp.next != null){
+            System.out.println("    " + temp.name + " is stalking " + temp.next.name);
+            temp = temp.next;
+        }
+        //The classic transversal system, but we print info out here
+        System.out.println("    " + temp.name + " is stalking " + killRing.name);
+        //Fence post
+ 
+    }
+ 
+    public void printGraveyard(){//Print out all the dead people. That sounds really weird outload
+        AssassinNode temp = graveyard;
+        while(temp != null){
+            System.out.println("    " + temp.name + " was killed by " + temp.killer);
+            temp = temp.next;
+        }
+        //we do not need to fencepost here because we compare from the very 1st one to the next one, because these do not need
+        //to be connected
+ 
+    }
+ 
+    public boolean killRingContains(String name){//Checks wheter the game still has a certain player
+        AssassinNode temp = killRing;
+        String low1= name.toLowerCase();
+        //This method ignores cases, so this line takes care of that problem now.
+ 
+        if(gameOver()){//If the game is over, there should only be one value in the kill ring
+            return low1.equals(temp.name.toLowerCase());
+ 
+        }
+        while(temp != null){
+            String low2 = temp.name.toLowerCase();
+            if(low1.equals(low2)){//If the we find a match
+                return true;
+            }
+            else{//Iterating through deletation of the previous point
+                temp = temp.next;
+            }
+        }
+        return false;
+ 
+    }
+ 
+    public boolean graveyardContains(String name){//Checking if a person is dead
+        if(graveyard == null){//Handling special case
+            return false;
+        }
+ 
+        AssassinNode temp = graveyard;
+        String low1= name.toLowerCase();
+        if(temp.next == null){//One value in the graveyard leads to this case
+            return low1.equals(temp.name.toLowerCase());
+        }
+ 
+        String low2 = temp.name.toLowerCase();
+ 
+        
+        //This is the similar to the algorithim in killRing contains. If there is a match, return 0. Otherwise, iterate
+        while(temp != null){
+            low2 = temp.name.toLowerCase();
+            if(low1.equals(low2)){
+                return true;
+            }
+            else{
+                temp = temp.next;
+            }
+        }
+ 
+        
+        return false;
+ 
+    }
+ 
+    public boolean gameOver(){//Checking if killring has one value, since there can only be winner/survivor
+        if(killRing.next == null) return true;
+        //The next varible usually leads to the next node. If there is only value, next leads to null
+ 
+        return false;
+    }
+ 
+    public String winner(){//If there is a win, this method will get the name of the winner
+        if(gameOver()) return killRing.name;
+        return null;
+    }
+ 
+    public void kill(String name){//Oh boy - We kill a value, by rearranging references to get a value from killRing to the graveyard
+        //without making or changing any nodes
+ 
+        if(gameOver()){//exception: If the game is one, you can really kill someone, unless they are imaginary
+            throw new IllegalStateException();
+        }
+        if(!killRingContains(name)){//If the name isnt even in the game, and it doesnt exist or its in the graveyard
+            throw new IllegalArgumentException();
+        }
+ 
+        AssassinNode temp1 = killRing;
+        AssassinNode temp2 = killRing;
+ 
+        
+        while(temp1.next != null){//If the one to perish is not at the front
+            if(name.toLowerCase().equals(temp1.next.name.toLowerCase() )   ){
+                temp2 = temp1.next;
+                //Setting temp2's graveyard to right after temp1's graveyard
+                temp2.killer = temp1.name;
+                //we already know who the killer is. Might as well set it now while its easy since they are next to each other
+                temp1.next = temp1.next.next;
+                //removing a value from temp -> removing temp.next.name
+                temp2.next = graveyard;
+                //temp2 is dead sadge
+                graveyard = temp2;
+                //temp2 is just the updated version of graveyard, so set them equal to make sure they are up to date
+            }else{
+                temp1 = temp1.next;
+                //Incrementing
+            }
+        }
+ 
+        if(name.toLowerCase().equals(killRing.name.toLowerCase())){//If our answer is at the front
+            temp2 = killRing;
+            //Setting up by making temp2 the front of the killring
+            killRing = killRing.next;
+            //Incrementing KillRing so it is ready for the next command after these commands are over
+            temp2.next = graveyard;
+            //Pointing temp2 (alternate of killring) at graveyard so temp2 goes to graveyard, since the person there is dead
+            graveyard = temp2;
+            //Graveyard official adds temp2
+            graveyard.killer = temp1.name;
+            //Setting up the killer
+        }//For some reason I am not completely sure of, it does not work before the while loop
+ 
+    }
