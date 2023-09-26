@@ -1,0 +1,114 @@
+/* HEADER:
+Joban Mand
+10/7/21
+AP Computer Science A Period 1
+Rocket Science Project Ch 2
+ */
+
+public class RocketProject{
+    /*The line below these comments are a permant unchanging variable that can be used anywhere in the program.
+    Its purpose is to easily scale up the size of the rocket that is our output. We use SCALE throughout the program as
+    a variable in order to write expressions that can work with any SCALE value
+     */
+    public static final int SCALE = 5;
+
+    public static void main(String[] args){
+        pyramid();
+        connector();
+        upperBody();
+        lowerBody();
+        connector();
+        lowerBody();
+        upperBody();
+        connector();
+        pyramid();
+        /* The main method calls all the other methods; the main method writes no code of its own, it simply calls
+        for the other methods to be used, and they have the code in them.
+        */
+    }
+
+    public static void connector(){
+        System.out.print("+");
+        for(int i = 1; i<= SCALE*2; i++){
+            System.out.print("=*");
+        }
+        System.out.println("+");
+        /* This method prints out the connector piece of the rocket.
+         The last print statement has "println" instead of "print" to move to the next line.
+         */
+    }
+
+    public static void pyramid(){
+        for(int row = 1; row <= (SCALE+(SCALE-1)); row++){
+            //The row number here does NOT scale directly with the scale number, so there is a function that gives 
+            //the row, and it properly scales with the SCALE variable.
+            for(int space = 0; space < (2*SCALE) - row; space++){
+                System.out.print(" ");
+            }
+            for(int slashes = 1; slashes <= row; slashes++){
+                System.out.print("/");
+            }
+            System.out.print("**");
+            for(int backslashes = 1; backslashes <= row; backslashes++){
+                System.out.print("\\");
+            }
+            System.out.println();
+        }
+        //I use for loops in order to properly output the rocket's parts. Because some of the outputs change for each
+        //line, I need for loops that use row, as well as the SCALE variable in order to make sure it can properly scale.
+        //The last print statement has ln at the end in order to push it to the next line. Now, if i remove this
+        //and add ln at the end of the print statement, it messes it up.
+    }
+
+    public static void upperBody(){
+        for(int row = 1; row <= SCALE;  row++){
+            //row number scales linerally with Scale
+            System.out.print("|");
+            for(int dots = 1; dots <= SCALE-row; dots++){
+                System.out.print(".");
+            }
+            for(int slashes = 1; slashes <= row; slashes++){
+                System.out.print("/\\");
+            }
+            for(int dots = 1; dots <= (SCALE-row)*2; dots++){
+                System.out.print(".");
+            }
+            for(int slashes = 1; slashes <= row; slashes++){
+                System.out.print("/\\");
+            }
+            for(int dots = 1; dots <= SCALE-row; dots++){
+                System.out.print(".");
+            }
+            System.out.println("|");
+
+        }
+        //This is very similar but with out a for loop needed for spaces. Scale, row and numbers that can be used with
+        //other scales are used as functions in order output everything properly.
+    }
+
+    public static void lowerBody(){
+        for(int row = 1; row <= SCALE;  row++){
+            //This large for loop is to make sure the row number changes when the scale changes, and because the
+            // row number scales directly and linerally, which makes it simple.
+            System.out.print("|");
+            for(int dots = 1; dots <= row-1; dots++){
+                System.out.print(".");
+            }
+            for(int slashes = 1; slashes <= (SCALE+1)-row; slashes++){
+                System.out.print("\\/");
+            }
+            for(int dots = 1; dots <=(2*(row)-2);dots++){
+                System.out.print(".");
+            }
+            for(int slashes = 1; slashes <= (SCALE+1)-row; slashes++){
+                System.out.print("\\/");
+            }
+            for(int dots = 1; dots <= row-1; dots++){
+                System.out.print(".");
+            }
+            System.out.println("|");
+        }
+        //The output for this section is just the flipped version of the upperBody part, but the functions used to output each
+        // line changed compared to upperBody. The println is not seperate, since it ends with a single line.
+    }
+}
