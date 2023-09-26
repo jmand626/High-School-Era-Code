@@ -1,0 +1,82 @@
+//Joban Mand
+//Period 3
+//10/9/22
+//Advanced Comp Sci Guitar Hero
+//Guitar37 Class
+ 
+public class Guitar37 implements Guitar {
+    public static final String KEYBOARD =
+        "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";  // keyboard layout
+    //String of keyboard characters that imitates a piano keyboard.
+ 
+    private GuitarString[] board;
+    //array of strings that represent each piano key
+    
+    private int timeCount;
+    //class wide field that determines the count from the number of tic() calls
+ 
+    public Guitar37() {
+        double frequency = 0.0;
+        //default value
+        board = new GuitarString[37];
+        for(int i = 0; i < 37; i++){//going through all 37 keys
+            frequency = 440 * Math.pow(2.0, (i-24)/12.0);
+            //the formula for frequency given by the doc
+            board[i] = new GuitarString(frequency);
+        }
+ 
+        timeCount = 0;
+    }
+ 
+    public void playNote(int pitch) {//method to play a note based directly on their pitch
+        if(pitch < -24 || pitch > 12){//if the pitch is out-of-bounds, just end the method
+            return;
+        }
+        int index = pitch + 24;
+        //the first letter in the keyboard string has a pitch of -24, and the pitches increase linerally afterwards
+        //We can add 24 to get the correck index
+        board[index].pluck();
+        //calling the pluck method of the individual string
+    }
+    
+    public boolean hasString(char string) {//Tests if the string for the keyboard has a given character
+        
+        int index = KEYBOARD.indexOf(string);
+        if(index == -1) return false;
+        return true;
+        //If the character has the string in it, it will return the index, which will never be 1
+        //That is why this is a very easy way of doing this
+    }
+    
+    public void pluck(char string) throws IllegalArgumentException{//using a character to specify what note to play - plucking a string
+        int index = KEYBOARD.indexOf(string);
+        if(index == -1) throw new IllegalArgumentException();
+        board[index].pluck();
+        //Similar idea to hasString but if the string does not exist the parameter was illegal
+        //If it passes that check, we use the pluck of the string itself.
+        
+    }
+    
+    public double sample(){//The curent sound sample is the sample of every sample in the array
+        double sum = 0.0;
+        for(int i = 0; i < 37; i++){
+            sum += board[i].sample();
+            //the sample method from each string
+        }
+        return sum;
+    }
+    
+    public void tic(){//The tic represents the passage of time. This method passes one second
+        for(int i = 0; i < 37; i++){
+            board[i].tic();
+            //causes every string to tic one sec forward together
+        }
+        timeCount++;
+        //Incrementing a field used for the time method
+    }
+ 
+    public int time(){//Getter method returns a counter that tracks every call of tic(), and therefore the passage of time
+        return timeCount;
+    }
+    
+}
