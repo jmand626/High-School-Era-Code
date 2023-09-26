@@ -1,0 +1,83 @@
+//Joban Mand
+//Period 3
+//10/9/22
+//Advanced Comp Sci Guitar Hero
+//GuitarString Class
+ 
+import java.util.*;
+ 
+public class GuitarString{
+ 
+    //Queue for ring buffer
+    private Queue<Double> q;
+    //the n value is desired capacity for each frequency
+    private int n;
+    //Decay factor used for the physics of the problem, and the tic method - it models the very slight loss of energy in the trip of a wave
+    public static final double energyDecayFactor = 0.996;
+ 
+    public GuitarString(double frequency) throws IllegalArgumentException{//for illegal frequency arguments
+        if(frequency <= 0) throw new IllegalArgumentException();
+ 
+        int n =  (int) Math.round( (StdAudio.SAMPLE_RATE / frequency) );
+        //This math.round is neccesarily so the java rules of double division cannot ruin your day
+ 
+        this.n = n;
+        //going back to the field
+ 
+        if(n < 2) throw new IllegalArgumentException();
+ 
+        q = new LinkedList<Double>();
+        //the rest of the intialization
+ 
+        for(int i = 0; i < n; i++){
+            q.add(0.0);
+        }//default values
+ 
+    }
+    public GuitarString(double[] init) throws IllegalArgumentException{//alternative constructor
+        int count = 0;
+        if(init.length < 2) throw new IllegalArgumentException();
+ 
+        q = new LinkedList<Double>();
+ 
+        for(int i = 0; i < init.length; i++){
+            q.add(init[i]);
+        }
+        //trasnferring every value in the array to a queue
+ 
+    }
+    public void pluck(){//The act of plucking a string requires to get a near random set of displacements
+        while(!q.isEmpty()){//Restting loop
+            q.remove();
+        }
+        Random r = new Random();
+        double temp = 0;
+ 
+        for(int i = 0; i < n; i++){
+            temp = (-0.5) + (0.5 - (-0.5)) * r.nextDouble();
+            //temp = min + (max - min) * r.nextDouble();
+            q.add(temp);
+        }
+    }
+ 
+    public void tic(){//Takes average of first two values, multiples by decay factor, adds to one, removes first value
+        double one = 0;
+        double two = 0;
+        double temp = 0;
+        one = q.peek();
+        q.remove();
+        two = q.peek();
+        temp = ((one+two)/2)*energyDecayFactor;
+        //see comment at header for more info
+        q.add(temp);
+    }
+ 
+    public double sample(){//Basically a getter method, but this one calls another method
+        return q.peek();
+ 
+    }
+ 
+    
+    
+    
+}
