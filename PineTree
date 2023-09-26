@@ -1,0 +1,102 @@
+/* HEADER:
+Joban Mand
+10/22/21
+AP Computer Science A Period 1
+PineTree Project Ch 3
+ */
+ 
+public class PineTree{
+    public static void main(String[] args){
+        //loop through size 2, section count 1, 
+        //to size 5 section count 5 
+        //The two comments above this one explain what we have to output (criteria)
+        //drawChar('h', 5);
+        //drawSpaces(5);
+        //drawStars(6);
+        //drawSection(5,2,3);
+        //drawBase(4,2);
+        //drawTree(5,3);
+        //all these methods in the comments above this one are delivarbles
+        //or tests to make sure everything works
+        //if we just wrote the code all the way, its practially
+        //guaranteed something would go wrong, and it would be really hard to fix it
+        drawTree(4,2);
+        //this draw the full tree, with drawTree drawing the sections
+        //while drawBase draws the base
+        //4 and 2 are just the last parameters I inputted in the code,
+        // you can change them to any integer
+ 
+    }
+ 
+    public static void drawChar(char ch, int n){
+        for(int i = 0; i < n; i++){
+            System.out.print(ch);
+            //loop through n times and print the character
+        }
+        // a method thats lets you print a character 
+        // a specfic number of times that you choose
+        //very useful for drawing the stars, X's, and | in the trees
+    }
+ 
+    public static void drawSpaces(int n){
+        drawChar(' ',n);
+        //calling the charcter printer fucntion for spaces
+        //Call drawChar with ' ' and n time
+    }
+ 
+    public static void drawStars(int n){
+        drawChar('*', n);
+        //same things as drawSpaces but with stars
+        //Call drawChar with '*' and  time
+    }
+    
+    public static void drawSection(int size, int secNum, int secCount){
+        for(int row = 1; row <= size; row++){
+            drawSpaces(( -2*(secNum-(size+secCount))-(2*row))/2);
+            drawStars((2*row)+(2*secNum - 3));
+            drawSpaces(( -2*(secNum-(size+secCount))-(2*row))/2); 
+            System.out.println();
+        }
+        //here we use our generalized equations while looping through the
+        //rows, which are dictated by the size.
+        //first we use the drawSpaces method with the equation divided by 2
+        //in order to make sure we get half of spaces on one side and 
+        //have the tree lined up properly. drawStars writes the stars, 
+        //another drawSpaces for the other half of spaces, and then
+        //System.out.println to go to the next line
+        //loop through size (for rows) and produce the section by calling drawSpaces and drawStars
+    }
+    
+    public static void drawTree(int size, int secCount){
+        for(int secNum = 1; secNum <= secCount; secNum++){
+            drawSection(size,secNum,secCount);
+        }
+        drawBase(size,secCount);
+        //just calling drawSection for every section we want in a tree
+        // and making sure the outprint changes for each section
+        //loop through secCount and call drawSection with size, secNum and secCount
+        //drawBase is called to get the base in and finish the tree
+    }
+    
+    
+    public static void drawBase(int size, int secCount){
+        for(int i = 1; i < 3; i++){
+            drawSpaces((-2*(1-(size+secCount))-(2*1))/2);
+            drawChar('|',1);
+            drawSpaces((-2*(1-(size+secCount))-(2*1))/2);
+            System.out.println();
+        }
+        drawSpaces((-2*(1-(size+secCount))-(2*2))/2);
+        drawChar('x',3);
+        drawSpaces((-2*(1-(size+secCount))-(2*2))/2); 
+        //the first half draws the first 2 lines. The number of spaces there 
+        //can be output by using the general space equation while setting 
+        //section and row to 1, since the first row of the first section in all of
+        // the trees has the same amount of spaces needed. We have a drawChar, 
+        //another drawSpaces, and then off to the next line.
+        //The last half is for the next line. The number of spaces is equivalent
+        // to the second row of first section. Replace section with 1, and row 
+        //with 2. Another drawChar, and a repeat drawSpaces
+    }
+    
+}
